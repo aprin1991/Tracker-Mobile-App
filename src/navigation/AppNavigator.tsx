@@ -1,26 +1,59 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AllExpenses from "../screens/AllExpenses";
-import ManageExpense from "../screens/ManageExpense";
-import RecentExpenses from "../screens/RecentExpenses";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AllExpenses from '../screens/AllExpenses';
+import ManageExpense from '../screens/ManageExpense';
+import RecentExpenses from '../screens/RecentExpenses';
+import { GlobalStyles } from '../constants/style';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const BottomTabs = createBottomTabNavigator();
 
 const ExpensesOverview = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="AllExpenses" component={AllExpenses} />
-      <Tab.Screen name="RecentExpenses" component={RecentExpenses} />
-    </Tab.Navigator>
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: 'white',
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+      }}
+    >
+      <BottomTabs.Screen
+        name='RecentExpenses'
+        component={RecentExpenses}
+        options={{
+          title: 'Recent Expenses',
+          tabBarLabel: 'Recent',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name='hourglass' size={size} color={color} />
+          ),
+        }}
+      />
+      <BottomTabs.Screen
+        name='AllExpenses'
+        component={AllExpenses}
+        options={{
+          title: 'All Expenses',
+          tabBarLabel: 'All Expenses',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name='calendar' size={size} color={color} />
+          ),
+        }}
+      />
+    </BottomTabs.Navigator>
   );
 };
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} />
-      <Stack.Screen name="ManageExpense" component={ManageExpense} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name='ExpensesOverview' component={ExpensesOverview} />
+      <Stack.Screen name='ManageExpense' component={ManageExpense} />
     </Stack.Navigator>
   );
 };
