@@ -5,13 +5,13 @@ import ManageExpense from '../screens/ManageExpense';
 import RecentExpenses from '../screens/RecentExpenses';
 import { GlobalStyles } from '../constants/style';
 import { Ionicons } from '@expo/vector-icons';
-import IconButton from '../UI/IconButton';
+import IconButton from '../components/UI/IconButton';
 import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
-const navigation = useNavigation();
 const ExpensesOverview = () => {
+  const navigation = useNavigation();
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -61,11 +61,20 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        // headerShown: false,
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: '#fff',
       }}
     >
-      <Stack.Screen name='ExpensesOverview' component={ExpensesOverview}  options={{ headerShown: false }} />
-      <Stack.Screen name='ManageExpense' component={ManageExpense} />
+      <Stack.Screen
+        name='ExpensesOverview'
+        component={ExpensesOverview}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='ManageExpense'
+        component={ManageExpense}
+        options={{ title: 'Manage Expense', presentation: 'modal' }}
+      />
     </Stack.Navigator>
   );
 };
